@@ -56,3 +56,7 @@ h1 {
     background-color: #04AA6D;
     color: white;
 }
+
+button {
+    cursor: pointer;
+}

@@ -9,35 +9,60 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <div class="topnav">
-        <a class="active" href="/">Home</a>
-        <a href="/users">Users</a>
-    </div>
-    <h1>EJS </h1>
-    <hr>
+<div class="topnav">
+    <a class="active" href="/">Home</a>
+    <a href="/users">Users</a>
+</div>
+<h1>EJS </h1>
+<hr>
 
-    <h2>List Users</h2>
+<div>
+    <div>Create new User</div>
+    <form action="/create-user" method="POST">
+        <label for="fname">First name:</label><br>
+        <input type="text" id="fname" name="fname"><br>
+        <label for="lname">Last name:</label><br>
+        <input type="text" id="lname" name="lname"><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email"><br>
+        <label for="address">Address:</label><br>
+        <input type="text" id="address" name="address"><br>
+        <button type="submit">Submit</button>
+    </form>
+</div>
 
-    <table id="customers">
+<hr>
+
+<h2>List Users</h2>
+
+<table id="customers">
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>email</th>
+        <th>address</th>
+        <th></th>
+    </tr>
+    <% for (let i = 0; i < dataUsers.length; i++) { %>
         <tr>
-            <th>name</th>
-            <th>email</th>
-            <th>address</th>
-            <th></th>
-        </tr>
-        <% for (let i=0; i < dataUsers.length; i++) { %>
-        <tr>
-            <td><%= dataUsers[i]['first_name'] %> - <%= dataUsers[i]['last_name'] %></td>
-            <td><%= dataUsers[i]['email']%></td>
-            <td><%= dataUsers[i]['address']%></td>
+            <td><%= dataUsers[i].id %></td>
+            <td><%= dataUsers[i].first_name %> - <%= dataUsers[i]['last_name'] %></td>
+            <td><%= dataUsers[i].email %></td>
+            <td><%= dataUsers[i].address %></td>
             <td>
                 <button type="button"><a href="/user/<%= dataUsers[i].id %>" target="_blank">Xem</a></button>
-                <button type="button">Sửa</button>
-                <button type="button">Xoá</button>
+                <button type="button"><a href="/edit-user/<%= dataUsers[i].id %>" target="_blank">Sửa</a></button>
+                <form action="/delete-user" method="POST">
+                    <input type="hidden" name="userId" value="<%= dataUsers[i].id %>">
+                    <button type="submit">Xoá</button>
+                </form>
             </td>
         </tr>
-        <% } %>
-    </table>
+    <% } %>
+</table>
+
+<hr>
+
 
 </body>
 </html>
