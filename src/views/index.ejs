@@ -5,14 +5,39 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Node JS Basic</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+    <div class="topnav">
+        <a class="active" href="/">Home</a>
+        <a href="/users">Users</a>
+    </div>
     <h1>EJS </h1>
+    <hr>
 
-    <%= dataUsers %>
+    <h2>List Users</h2>
 
-    <img src="/images/anh-1.png" alt="">
+    <table id="customers">
+        <tr>
+            <th>name</th>
+            <th>email</th>
+            <th>address</th>
+            <th></th>
+        </tr>
+        <% for (let i=0; i < dataUsers.length; i++) { %>
+        <tr>
+            <td><%= dataUsers[i]['first_name'] %> - <%= dataUsers[i]['last_name'] %></td>
+            <td><%= dataUsers[i]['email']%></td>
+            <td><%= dataUsers[i]['address']%></td>
+            <td>
+                <button type="button"><a href="/user/<%= dataUsers[i].id %>" target="_blank">Xem</a></button>
+                <button type="button">Sửa</button>
+                <button type="button">Xoá</button>
+            </td>
+        </tr>
+        <% } %>
+    </table>
+
 </body>
 </html>
