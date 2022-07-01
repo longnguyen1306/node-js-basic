@@ -1,4 +1,6 @@
 import pool from "../config/connectDB";
+import multer from 'multer';
+import path from 'path';
 
 let getHomePage = async (req, res) => {
     const [rows, fields] = await pool.execute('SELECT * FROM users');
@@ -7,7 +9,7 @@ let getHomePage = async (req, res) => {
 
 let getDetailUser = async (req, res) => {
     let id = req.params.id;
-    let [user] = await pool.execute('SELECT * FROM users WHERE id = ?',[id] )
+    let [user] = await pool.execute('SELECT * FROM users WHERE id = ?', [id])
     return res.send(JSON.stringify(user));
 }
 
@@ -25,7 +27,7 @@ let deleteUser = async (req, res) => {
 
 let editUser = async (req, res) => {
     let id = req.params.id;
-    let [user] = await pool.execute('SELECT * FROM users WHERE id = ?',[id] )
+    let [user] = await pool.execute('SELECT * FROM users WHERE id = ?', [id])
     return res.render('update', {user: user[0]});
 }
 
@@ -36,11 +38,46 @@ let updatetUser = async (req, res) => {
     return res.redirect('/');
 }
 
+//upload file
+let getUploadFilePage = async (req, res) => {
+    return res.render('uploadFile')
+}
+
+let handleUploadFile = async (req, res) => {
+    if (req.fileValidationError) {
+        return res.send(req.fileValidationError);
+    } else if (!req.file) {
+        return res.send("Please select an image to upload");
+    }
+    res.send(`You have updated this image: <hr/> <img src="/images/${req.file.filename}" width="500px"/><hr/><a href="/upload">Upload another image</a>`);
+}
+
+let handleUploadMultiple = async (req, res) => {
+    if (req.fileValidationError) {
+        return res.send(req.fileValidationError);
+    } else if (!req.files) {
+        return res.send("Please select an image to upload");
+    }
+
+    let result = "You have uploaded these images: <hr/>";
+    const files = req.files;
+    let index, len;
+
+    for (index = 0, len = files.length; index < len; ++index) {
+        result += `<img src="/images/${files[index].filename}" width="300" style="margin-right: 20px;">`
+    }
+    result += `<hr /> <a href="/upload">Upload more images</a>`;
+    res.send(result);
+}
+
 module.exports = {
     getHomePage,
     getDetailUser,
     createNewUser,
     deleteUser,
     editUser,
-    updatetUser
+    updatetUser,
+    getUploadFilePage,
+    handleUploadFile,
+    handleUploadMultiple
 }

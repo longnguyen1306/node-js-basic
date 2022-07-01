@@ -1,0 +1,39 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Upload File</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        form, button {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="topnav">
+    <a href="/">Home</a>
+    <a class="active" href="/upload">Upload File</a>
+</div>
+
+<div class="upload-file-container">
+    <form method="POST" action="/upload-file-handle" enctype="multipart/form-data">
+        <div>
+            <label>Select your profile picture:</label>
+            <input type="file" name="profile_pic" />
+        </div>
+        <div>
+            <input type="submit" name="btn_upload_profile_pic" value="Upload" />
+        </div>
+    </form>
+    <hr>
+    <form action="/upload-multiple-file-handle" method="POST" enctype="multipart/form-data">
+        <label>Multiple</label><br>
+        <input type="file" multiple name="images"><br>
+        <button type="submit">Lưu</button>
+    </form>
+</div>
+</body>
+</html>
